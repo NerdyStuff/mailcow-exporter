@@ -118,7 +118,8 @@ def getContainerStatus(infos):
 def getTotalNumberOfMails(infos):
     numberMails = 0
     for mailbox in infos:
-        numberMails += int(mailbox['messages'])
+        if 'messages' in mailbox:
+            numberMails += int(mailbox['messages'])
     return numberMails
 
 # Collect data from API
@@ -128,14 +129,19 @@ def collectData():
 
     # Vmail
     vmailInfos = getInfo("status/vmail")
-    vmStoragePercent.set(vmailInfos['used_percent'][:-1])
-    vmStorageTotal.set(calcBytes(vmailInfos['total']))
-    vmStorageUsed.set(calcBytes(vmailInfos['used']))
+    if 'used_percent' in vmailInfos: 
+        vmStoragePercent.set(vmailInfos['used_percent'][:-1])
+    if 'total' in vmailInfos:
+        vmStorageTotal.set(calcBytes(vmailInfos['total']))
+    if 'used' in vmailInfos:
+        vmStorageUsed.set(calcBytes(vmailInfos['used']))
 
     # Solr
     solrInfos = getInfo("status/solr")
-    solrNumberDocuments.set(solrInfos['solr_documents'])
-    solrSize.set(calcBytes(solrInfos['solr_size']))
+    if 'solr_documents' in solrInfos:
+        solrNumberDocuments.set(solrInfos['solr_documents'])
+    if 'solr_size' in solrInfos:
+        solrSize.set(calcBytes(solrInfos['solr_size']))
 
 
     # TODO Add more data
