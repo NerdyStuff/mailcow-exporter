@@ -37,5 +37,11 @@ Note: The `SCARPE_INTERVAL` uses seconds as input!
 
 ## Docker
 Use the `Dockerfile` to create a docker container.
-Therefore clone the repository and change the environment variables in the Dockerfile
+Therefore clone the repository and change the environment variables in the Dockerfile.
 
+Use `docker build --tag mailcow-exporter:latest .` to create an docker image.
+
+Run the container using `docker run -d -p 9999:9999 mailcow-exporter`.
+
+You can see the metrics in your browser using  [http://localhost:9999](http://localhost:9999)
+Prometheus can get the data also from the `/metrics` endpoint.
